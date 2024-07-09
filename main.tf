@@ -1,5 +1,5 @@
 provider "aws" {
-  region = "us-east-2"
+  region = "us-east-1"
 }
 
 resource "aws_s3_bucket" "s3_bucket" {
@@ -36,13 +36,11 @@ resource "aws_s3_bucket_ownership_controls" "s3_bucket" {
 }
 
 resource "aws_s3_bucket_acl" "s3_bucket" {
+  bucket = aws_s3_bucket.s3_bucket.id
   depends_on = [
     aws_s3_bucket_public_access_block.s3_bucket,
     aws_s3_bucket_ownership_controls.s3_bucket,
   ]
-
-  bucket = aws_s3_bucket.s3_bucket.id
-
   acl = "public-read"
 }
 
